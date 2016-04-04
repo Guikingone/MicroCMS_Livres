@@ -1,12 +1,15 @@
 <?php
 
 // Home page
-$app->get('/', function () {
-    require '../src/model.php';
-    $articles = getArticles();
+$app->get('/', function () use ($app) {
+    $livre = $app['dao.livre']->findAll();
+    return $app['twig']->render('index.html.twig', array('livres' => $livre));
+})->bind('home');
 
-    ob_start();             // start buffering HTML output
-    require '../views/view.php';
-    $view = ob_get_clean(); // assign HTML output to $view
-    return $view;
-});
+// Livre details with author
+$app->get('/livre/{id}', function($id) use ($app){
+    $livre = $app['dao.livre']->find($id);
+    $author = $app['dao.author']->findAllByLivre($id);
+    return $app['twig']->render('livre.html.twig', array('livre' => $livre,
+        'author' => $author));
+})->bind('livre');
