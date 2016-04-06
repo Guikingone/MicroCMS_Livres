@@ -62,11 +62,12 @@ class Author
         return $this->auth_last_name;
     }
 
-    public function setLivre(Livre $livre) {
-        $this->$livre = $livre;
+    public function getLivre()
+    {
+        return $this->livre;
     }
 
-    public function getLivre() {
-        return $this->$livre;
+    public function setLivre(Livre $livre) {
+        $this->$livre = $livre;
     }
 }

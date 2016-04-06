@@ -29,6 +29,13 @@ class Livre
      */
     private $auth_id;
 
+    /**
+     * Associated Author
+     *
+     * @var \MicroCMS\Domain\Author
+     */
+    private $author;
+
     public function getBookId()
     {
         return $this->book_id;
@@ -77,5 +84,15 @@ class Livre
     public function setAuthId($auth_id)
     {
         $this->auth_id = $auth_id;
+    }
+
+    public function setAuthor(Author $author)
+    {
+        $this->author = $author;
+    }
+
+    public function getAuthor()
+    {
+        return $this->author;
     }
 }

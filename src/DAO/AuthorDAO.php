@@ -8,9 +8,7 @@
 
 namespace MicroCMS\DAO;
 
-use Doctrine\DBAL\Connection;
 use MicroCMS\Domain\Author;
-
 
 class AuthorDAO extends DAO
 {
@@ -19,18 +17,20 @@ class AuthorDAO extends DAO
      */
     private $livreDAO;
 
-    public function setLivreDAO(LivreDAO $livreDAO) {
+    public function setLivreDAO(LivreDAO $livreDAO)
+    {
         $this->livreDAO = $livreDAO;
     }
 
     /**
-     * Return a list of all author for an book, sorted by date (most recent last).
+     * Return the name of book author
      *
      * @param integer $livreId The book id.
      *
-     * @return array A list of all author for the book.
+     * @return array The author for the book.
      */
-    public function findAllByLivre($livreId) {
+    public function findAllByLivre($livreId)
+    {
         // The associated book is retrieved only once
         $livre = $this->livreDAO->find($livreId);
 
@@ -47,14 +47,15 @@ class AuthorDAO extends DAO
      * @param array $row The DB row containing Author data.
      * @return \MicroCMS\Domain\Author
      */
-    protected function buildDomainObject($row) {
+    protected function buildDomainObject($row)
+    {
         $author = new Author();
         $author->setAuthId($row['auth_id']);
         $author->setAuthFirstName($row['auth_first_name']);
         $author->setAuthLastName($row['auth_last_name']);
 
         if (array_key_exists('book_id', $row)) {
-            // Find and set the associated article
+            // Find and set the associated book
             $livreId = $row['book_id'];
             $livre = $this->livreDAO->find(livreId);
             $author->setLivre($livre);
@@ -62,15 +63,4 @@ class AuthorDAO extends DAO
 
         return $author;
     }
-
-
-            // Convert query result to an array of domain objects
-        //$author = array();
-        //foreach ($result as $row) {
-        //$authId = $row['auth_id'];
-        //$author = $this->buildDomainObject($row);
-            // The associated article is defined for the constructed comment
-        //$author->setLivre($livre);
-        //$author[$authId] = $author;
-
 }

@@ -6,7 +6,9 @@
     <p>
         <h2>{{ livre.BookTitle }}</h2>
         <ul>
-            <li>Auteur : {{ livre.AuthId }}</li>
+            {% for author in author %}
+                <li>Auteur : {{ author.auth_first_name }} {{ author.auth_last_name }}</li>
+            {% endfor %}
             <li>ISBN : {{ livre.BookIsbn }}</li>
         </ul>
         <p class="text-center">{{ livre.BookSummary }}</p>
